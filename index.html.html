@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>For Nikitaa 🌙</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wine-deepest:#22050c;
+    --wine-dark:#420d1c;
+    --wine-mid:#6b1428;
+    --wine-soft:#8a2038;
+    --gold:#e3b567;
+    --gold-soft:#f0d6a3;
+    --blush:#e7a9b8;
+    --cream:#f7ece2;
+    --cream-dim:#dcc3c8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{
+    width:100%;
+    min-height:100%;
+    background:var(--wine-deepest);
+    font-family:'Quicksand',sans-serif;
+    color:var(--cream);
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--gold);color:var(--wine-deepest);}
+  .display{font-family:'Cormorant Garamond',serif;}
+  a,button{font-family:inherit;}
+
+  /* ---------- shared: starfield ---------- */
+  .stars{position:fixed; inset:0; z-index:0; pointer-events:none;}
+  .star{
+    position:absolute; width:2px; height:2px;
+    background:var(--cream); border-radius:50%;
+    opacity:.6; animation:twinkle 3.5s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:.15; transform:scale(1);}
+    50%{opacity:.9; transform:scale(1.6);}
+  }
+
+  /* ================= PAGE 1 — SEAL ================= */
+  #seal-page{
+    position:fixed; inset:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    background:radial-gradient(ellipse at 50% 30%, var(--wine-mid), var(--wine-deepest) 72%);
+    z-index:5;
+    transition:transform 1.1s cubic-bezier(.65,0,.35,1), opacity 1.1s ease;
+  }
+  #seal-page.opened{transform:translateY(-100%); opacity:0; pointer-events:none;}
+
+  .credit-top{
+    position:absolute; top:26px; left:0; right:0;
+    text-align:center; font-size:.7rem; letter-spacing:.05em;
+    color:var(--cream-dim); opacity:.8;
+  }
+  .seal-wrap{
+    display:flex; flex-direction:column; align-items:center; gap:26px;
+    padding:0 24px; text-align:center;
+  }
+  .seal-orb{
+    position:relative; width:132px; height:132px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .seal-orb .ring{
+    position:absolute; inset:0; border-radius:50%;
+    border:1px solid rgba(227,181,103,.35);
+    animation:breathe 2.8s ease-in-out infinite;
+  }
+  .seal-orb .ring:nth-child(2){inset:-16px; animation-delay:.4s; border-color:rgba(227,181,103,.18);}
+  @keyframes breathe{
+    0%,100%{transform:scale(1); opacity:.5;}
+    50%{transform:scale(1.08); opacity:1;}
+  }
+  .seal-core{
+    width:88px; height:88px; border-radius:50%;
+    background:linear-gradient(145deg,var(--gold-soft),var(--gold) 60%,#a8783a);
+    box-shadow:0 0 44px rgba(227,181,103,.5), inset 0 -6px 12px rgba(0,0,0,.25);
+    display:flex; align-items:center; justify-content:center;
+    font-size:2.1rem;
+    transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .seal-orb:active .seal-core{transform:scale(.9);}
+  .seal-wrap h1{
+    font-size:1.65rem; font-weight:500; letter-spacing:.02em; color:var(--cream);
+  }
+  .seal-wrap p.tap-hint{font-size:.85rem; color:var(--cream-dim); letter-spacing:.03em;}
+  .credit-bottom{
+    position:absolute; bottom:30px; left:0; right:0;
+    text-align:center; font-size:.75rem; color:var(--blush); letter-spacing:.03em;
+  }
+
+  .burst{position:fixed; inset:0; pointer-events:none; z-index:6;}
+  .burst span{position:absolute; top:50%; left:50%; width:6px; height:6px; border-radius:50%; opacity:0;}
+
+  /* ================= PAGE 2 — LETTER ================= */
+  #letter-page{
+    position:relative; z-index:1; min-height:100vh;
+    background:linear-gradient(180deg,var(--wine-deepest), var(--wine-dark) 45%, #35091a 100%);
+    padding:64px 20px 80px;
+  }
+  .letter-header{max-width:560px; margin:0 auto 46px; text-align:center;}
+  .letter-header .eyebrow-line{width:34px; height:1px; background:var(--gold); margin:0 auto 18px; opacity:.75;}
+  .letter-header h2{
+    font-family:'Cormorant Garamond',serif; font-weight:600;
+    font-size:clamp(2rem,7vw,2.7rem); color:var(--cream); line-height:1.15;
+  }
+  .letter-header p{
+    margin-top:16px; font-size:.95rem; line-height:1.75; color:var(--cream-dim); padding:0 8px;
+  }
+
+  .gallery{
+    max-width:520px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(2,1fr); gap:18px 16px;
+  }
+  .frame{
+    position:relative; background:#fbf3ea; padding:10px 10px 28px; border-radius:3px;
+    box-shadow:0 12px 26px rgba(0,0,0,.4);
+    cursor:pointer; transform:rotate(var(--r,0deg));
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .frame:nth-child(1){--r:-3deg;} .frame:nth-child(2){--r:2deg;}
+  .frame:nth-child(3){--r:1.5deg;} .frame:nth-child(4){--r:-2deg;}
+  .frame:nth-child(5){--r:-1.5deg;} .frame:nth-child(6){--r:2.5deg;}
+  .frame:nth-child(7){--r:-2.5deg;} .frame:nth-child(8){--r:1.5deg;}
+  .frame:active{transform:rotate(0deg) scale(.97);}
+  .frame .photo-box{
+    width:100%; aspect-ratio:1/1; border-radius:2px;
+    background:linear-gradient(135deg,var(--wine-soft),var(--wine-mid));
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .frame .photo-box img{width:100%; height:100%; object-fit:cover; display:block;}
+  .frame .photo-box .ph-emoji{font-size:1.6rem; opacity:.5;}
+  .frame .cap{
+    position:absolute; bottom:6px; left:0; right:0; text-align:center;
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.78rem; color:#8a5d5d;
+  }
+
+  .footer-title{max-width:520px; margin:60px auto 0; text-align:center;}
+  .footer-title .div-line{width:60px; height:1px; background:var(--blush); margin:0 auto 20px; opacity:.6;}
+  .footer-title h3{font-family:'Cormorant Garamond',serif; font-size:clamp(1.6rem,6vw,2.1rem); color:var(--blush);}
+  .footer-title p{margin-top:10px; font-size:.8rem; color:var(--cream-dim); letter-spacing:.03em;}
+
+  /* ================= FULL-PAGE PHOTO VIEW ================= */
+  #viewer{
+    position:fixed; inset:0; z-index:30;
+    background:radial-gradient(ellipse at 50% 20%, var(--wine-mid), var(--wine-deepest) 78%);
+    display:flex; flex-direction:column;
+    opacity:0; visibility:hidden;
+    transform:translateY(24px);
+    transition:opacity .4s ease, transform .45s cubic-bezier(.22,.8,.32,1), visibility 0s linear .45s;
+  }
+  #viewer.show{
+    opacity:1; visibility:visible; transform:translateY(0);
+    transition:opacity .4s ease, transform .45s cubic-bezier(.22,.8,.32,1), visibility 0s;
+  }
+  .viewer-top{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 20px 6px;
+  }
+  .viewer-count{font-size:.8rem; letter-spacing:.06em; color:var(--cream-dim);}
+  .viewer-close{
+    width:38px; height:38px; border-radius:50%; border:none;
+    background:rgba(247,236,226,.12); color:var(--cream);
+    font-size:1.1rem; display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .viewer-body{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+    padding:6px 26px 20px; text-align:center; gap:20px;
+    overflow-y:auto;
+  }
+  .viewer-photo{
+    width:100%; max-width:250px; aspect-ratio:1/1; border-radius:8px;
+    background:linear-gradient(135deg,var(--wine-soft),var(--wine-dark));
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.5);
+    transition:opacity .28s ease, transform .32s ease;
+    flex-shrink:0;
+  }
+  .viewer-photo img{width:100%; height:100%; object-fit:cover;}
+  .viewer-photo .ph-emoji{font-size:2.4rem; opacity:.55;}
+  .viewer-caption{
+    max-width:400px;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:1.12rem; line-height:1.75; color:var(--cream);
+    transition:opacity .28s ease, transform .32s ease;
+    padding-bottom:4px;
+  }
+  .viewer-nav{
+    display:flex; align-items:center; justify-content:center; gap:34px;
+    padding:0 20px 34px;
+  }
+  .nav-btn{
+    width:52px; height:52px; border-radius:50%; border:1px solid rgba(227,181,103,.4);
+    background:rgba(227,181,103,.08); color:var(--gold-soft);
+    font-size:1.3rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:transform .2s ease, background .2s ease;
+  }
+  .nav-btn:active{transform:scale(.9); background:rgba(227,181,103,.2);}
+  .viewer-dots{display:flex; gap:7px; align-items:center; justify-content:center; padding-bottom:20px;}
+  .dot{width:6px; height:6px; border-radius:50%; background:rgba(247,236,226,.3); transition:background .25s ease, transform .25s ease;}
+  .dot.active{background:var(--gold); transform:scale(1.3);}
+
+  @media (min-width:600px){
+    .gallery{grid-template-columns:repeat(3,1fr); max-width:640px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<!-- ============ PAGE 1 ============ -->
+<section id="seal-page">
+  <div class="credit-top">💌 little efforts from your personal software engineer</div>
+
+  <div class="seal-wrap">
+    <div class="seal-orb" id="sealOrb">
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="seal-core">💝</div>
+    </div>
+    <h1 class="display">A little something for you 🎁</h1>
+    <p class="tap-hint">Plz.. tap the heart to open it from your sweet si finger Mrs Nikitaa ✨</p>
+  </div>
+
+  <div class="credit-bottom">for Nikitaa, from Ashhh 🤍</div>
+</section>
+
+<div class="burst" id="burst"></div>
+
+<!-- ============ PAGE 2 ============ -->
+<section id="letter-page">
+  <div class="letter-header">
+    <div class="eyebrow-line"></div>
+    <h2 class="display">Happy Birthday Nikkk... 🎂</h2>
+    <p>
+      I hope tumhara ye special day tumhari beautiful smile ki tarah hi amazing ho. 🥹❤️ Tum meri life ke sabse special people mein se ek ho, aur honestly, I feel so lucky to have you. 🫶🏻 Bas hamesha khush rehna, apne saare dreams achieve karna aur aise hi cute rehna. ❤️
+
+I love youuu sooooo much, baby. 🫀✨ Happy Birthday once again, meri Nikitaaa! 🎂❤️
+
+    </p>
+  </div>
+
+  <div class="gallery" id="gallery"></div>
+
+  <div class="footer-title">
+    <div class="div-line"></div>
+    <h3 class="display">Happy Birthday Nikitaa 🎉</h3>
+    <p>A Little Surprise From Your Personal Software Engineer 👨‍💻❤️✨</p>
+  </div>
+</section>
+
+<!-- ============ FULL PAGE PHOTO VIEWER ============ -->
+<div id="viewer">
+  <div class="viewer-top">
+    <span class="viewer-count" id="viewerCount">1 / 8</span>
+    <button class="viewer-close" id="viewerClose">✕</button>
+  </div>
+  <div class="viewer-body">
+    <div class="viewer-photo" id="viewerPhoto"></div>
+    <p class="viewer-caption" id="viewerCaption"></p>
+  </div>
+  <div class="viewer-nav">
+    <button class="nav-btn" id="prevBtn">←</button>
+    <button class="nav-btn" id="nextBtn">→</button>
+  </div>
+  <div class="viewer-dots" id="viewerDots"></div>
+</div>
+
+<script>
+  /* ---------- starfield ---------- */
+  const starsEl = document.getElementById('stars');
+  for(let i=0;i<70;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*3.5)+'s';
+    s.style.width = s.style.height = (Math.random()<0.15 ? '3px' : '2px');
+    starsEl.appendChild(s);
+  }
+
+  /* ---------- seal open ---------- */
+  const sealPage = document.getElementById('seal-page');
+  const sealOrb = document.getElementById('sealOrb');
+  const burst = document.getElementById('burst');
+
+  function fireBurst(){
+    const colors = ['#e3b567','#f0d6a3','#e7a9b8','#f7ece2'];
+    for(let i=0;i<28;i++){
+      const p = document.createElement('span');
+      const angle = Math.random()*Math.PI*2;
+      const dist = 90 + Math.random()*160;
+      const dx = Math.cos(angle)*dist;
+      const dy = Math.sin(angle)*dist;
+      p.style.background = colors[Math.floor(Math.random()*colors.length)];
+      p.style.transition = 'transform .9s cubic-bezier(.2,.7,.3,1), opacity .9s ease';
+      burst.appendChild(p);
+      requestAnimationFrame(()=>{
+        p.style.opacity = '1';
+        p.style.transform = `translate(${dx}px, ${dy}px) scale(0.4)`;
+      });
+      setTimeout(()=>{ p.style.opacity='0'; }, 650);
+      setTimeout(()=>p.remove(), 950);
+    }
+  }
+
+  sealOrb.addEventListener('click', ()=>{
+    fireBurst();
+    setTimeout(()=>{
+      sealPage.classList.add('opened');
+      document.body.style.overflow = 'auto';
+    }, 380);
+  }, {once:true});
+
+  /* ---------- gallery data ----------
+     Replace img:"" with your actual photo path/URL for each item, e.g. img:"photos/1.jpg"
+     Replace each caption with your own line if you'd like — these are placeholders. */
+  const photoEmojis = ['📷','🌸','😄','🌙','🎈','🌊','🥂','💫'];
+  const photos = [
+    {  title:"The Insta Reply ❤️", img:"photos/1st.JPG", caption:"Uff, kitne logon ke sentiments hurt kar diye 😭😂❤️ bhaee… mai kitna lucky hoon 🥹❤️ Us din maine tumhari story pe bas ek chhota sa reply kiya tha, mujhe bilkul nahi pata tha ki us ek little reply ki wajah se meri life mein itna **pure-hearted, caring aur genuinely beautiful person** aa jayega. 🫶🏻  And honestly, tum sirf cute nahi ho… tum itni zyada cute ho ki words literally fall short. 😭❤️, Tumse baat karna, tumhe jaanna aur tumhe apni life ka part banana — it all feels like one of the sweetest things that ever happened to me. Sometimes I just look at you and think… **“Damn, how did I get this lucky?”** 🥹❤️ Bas ek chhote se reply se shuru hui story… aur aaj tum meri favourite person ho. 🫀✨ " },
+    {  title:"Our First Meet ❤️", img:"photos/2nd.JPG", caption:"this outfI loveit yrr, not just because it looks so beautiful on you, but because this is the exact outfit in which I saw you for the first time in real life… and I swear, I still remember that moment so clearly. 🥹❤️ Tum mere bagal mein baithi thi aur mujhe literally samajh hi nahi aa raha tha ki main tumhe dekhu, tumse baat karu ya bas us moment ko quietly feel karta rahu. 😭🫶🏻 Sach bolu toh mujhe shivering si ho rahi thi, because I still couldn’t believe ki itni cute, pretty aur special ladki mere bilkul bagal mein baithi hai. 🥹❤️ Us moment mein time jaise thoda slow ho gaya tha, aur mere liye woh genuinely life ke sabse beautiful moments mein se ek ban gaya. Aaj jab bhi main tumhe is outfit mein dekhta hoon, mujhe woh first meeting yaad aa jaati hai aur automatically face pe smile aa jaati hai. ❤️ Maybe tumhare liye woh bas ek normal day tha, but for me, that was a memory I’ll always keep close to my heart. 🫀✨" },
+    {  title:"My Moonlight ✨❤️", img:"photos/3rd.JPG", caption:" Kitni gori ho yrrr, literally itni beautiful shine kar rahi ho bilkul apne pure heart ki tarah… 🥹❤️ kya hi bataun bhai tumhari khubsurti ke baare mein, honestly mere paas words hi nahi hain jo properly explain kar sakein ki tum mujhe kitni zyada pretty lagti ho. Jitna tumhe dekhta hoon, utna hi aur zyada tumhari beauty mein lost hota jaata hoon, pata nahi tum mein aisa kya magic hai ki tumhe dekhte hi main literally pagal sa ho jaata hoon. 😭🫶🏻 Tumhari smile, tumhari eyes, tumhara woh innocent sa face… everything about you feels so effortlessly beautiful, aur sabse special baat ye hai ki tumhari outer beauty ke saath tumhara pure heart tumhe aur bhi beautiful bana deta hai. ❤️ Kabhi kabhi genuinely sochta hoon ki yaar, how can someone be this beautiful and still have such a beautiful heart? 🥹✨" },
+    {  title:"My Russian Princess ❤️✨", img:"photos/4th.JPG", caption:"Ufff bhaee, meri favourite pic hai ye, iske baare mein kya hi bolun… 😭❤️ that black top is just looking like a WOOWW, literally jab maine tumhe isme pehli baar dekha tha na, I was like damn baby, tum toh ekdum Russian princess jaisi lag rahi thi 😭🫶🏻 itni pretty, itni classy aur itni effortlessly beautiful ki bas dekhta hi reh jaaun. Pata nahi tum mein kya magic hai, but every time I see you, I fall for you a little more… aur ye pic toh honestly mere heart ke ekdum special corner mein hai, because you looked absolutely breathtaking in this. 🥹❤️ I love you sooooo much bachaa, words se zyada, jitna main kabhi properly explain bhi nahi kar paunga. 🫀✨" },
+    {  title:"Too Gorgeous to Handle ❤️‍🔥", img:"photos/5th.JPG", caption:"Yrrrr Nikitaaaa, kitni hot lag rahi ho yrr is pic mein 😭❤️ annnnn kyuuu ho itni sexyyyy baby, tumhari pics dekh ke main literally pagal sa ho jaata hoon, mann karta hai bas tumhe dekhta rahun aur compliments deta jaaun, kyunki jitna bolun utna hi kam lagta hai… you’re seriously too gorgeous to handle, aur tumhari ye pic toh uff, meri favourite list mein seedha top pe jaane wali hai 😭🫶🏻❤️" },
+    {  title:"Just Look at Her 😭❤️", img:"photos/6th.JPG", caption:"Myyyyy Goddd, those curly hairsss… 😭❤️ kya chiiizz ho yrr tum, seriously you ate thousands of models in breakfast 😭🫶🏻 itniii bahut bahut pyaari lag rahi ho ki honestly words kam pad rahe hain baby. Tumhari har ek cheez literally perfect lagti hai, from those gorgeous curls to your cute little bindi, everything about you just hits different. 🥹❤️ Pata nahi kaise koi itna effortlessly beautiful ho sakta hai, but tumhe dekh ke bas ek hi thought aata hai — yaar, this girl is unreal. 😭✨ Tumhari smile, tumhare curls, tumhari bindi, tumhara pura look… sab kuch itna perfect hai ki mann karta hai bas tumhe dekhta rahun aur compliments deta rahun, because no matter how much I say, it will still never be enough to describe how pretty you actually are. 🫀❤️" },
+    {  title:"Perfect Lips, Perfect You ❤️‍🔥", img:"photos/7th.JPG", caption:"Oooo myyy Goddd, lipsss 😭❤️ kitne perfect hain yrr tumhare, aisa lag raha hai jaise surgery karwa ke perfect model lips banwaye ho 😭😂 meri sexy model, but honestly sirf lips hi nahi, tumhara figure, tumhari baatein, tumhari smile… everything about you is just sooo pretty. 🥹❤️" },
+    {  title:"Those Eyes ❤️", img:"photos/8th.JPG", caption:"Yrr tumhari eyes ka sach mein kuch alag hi scene hai 😭❤️ jab bhi dekhta hoon na, pata nahi kyun bas tumhe hi dekhta rehne ka mann karta hai. Aisa lagta hai tumne apni inhi aankhon se mujhe hypnotise kar rakha hai, phir dimaag mein kuch aur aata hi nahi… bas tum hi yaad aati ho. 🥹❤️" },
+  ];
+
+  const gallery = document.getElementById('gallery');
+  photos.forEach((p, i)=>{
+    const frame = document.createElement('div');
+    frame.className = 'frame';
+    frame.innerHTML = `
+      <div class="photo-box">
+        ${ p.img ? `<img src="${p.img}" alt="memory ${i+1}">` : `<span class="ph-emoji">${photoEmojis[i % photoEmojis.length]}</span>` }
+      </div>
+      <div class="cap">${p.title}</div>
+    `;
+    frame.addEventListener('click', ()=>openViewer(i));
+    gallery.appendChild(frame);
+  });
+
+  /* ---------- full page viewer ---------- */
+  const viewer = document.getElementById('viewer');
+  const viewerPhoto = document.getElementById('viewerPhoto');
+  const viewerCaption = document.getElementById('viewerCaption');
+  const viewerCount = document.getElementById('viewerCount');
+  const viewerClose = document.getElementById('viewerClose');
+  const viewerDots = document.getElementById('viewerDots');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  let currentIndex = 0;
+
+  photos.forEach(()=>{
+    const d = document.createElement('span');
+    d.className = 'dot';
+    viewerDots.appendChild(d);
+  });
+
+  function renderPhoto(index, animate){
+    const p = photos[index];
+    if(animate){
+      viewerPhoto.style.opacity = '0';
+      viewerPhoto.style.transform = 'scale(.94)';
+      viewerCaption.style.opacity = '0';
+      viewerCaption.style.transform = 'translateY(8px)';
+    }
+    setTimeout(()=>{
+      viewerPhoto.innerHTML = p.img ? `<img src="${p.img}" alt="memory">` : `<span class="ph-emoji">${photoEmojis[index % photoEmojis.length]}</span>`;
+      viewerCaption.textContent = p.caption;
+      viewerCount.textContent = `${index+1} / ${photos.length}`;
+      [...viewerDots.children].forEach((d,i)=> d.classList.toggle('active', i===index));
+      viewerPhoto.style.opacity = '1';
+      viewerPhoto.style.transform = 'scale(1)';
+      viewerCaption.style.opacity = '1';
+      viewerCaption.style.transform = 'translateY(0)';
+    }, animate ? 140 : 0);
+  }
+
+  function openViewer(index){
+    currentIndex = index;
+    renderPhoto(currentIndex, false);
+    viewer.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeViewer(){
+    viewer.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  }
+  function goNext(){ currentIndex = (currentIndex + 1) % photos.length; renderPhoto(currentIndex, true); }
+  function goPrev(){ currentIndex = (currentIndex - 1 + photos.length) % photos.length; renderPhoto(currentIndex, true); }
+
+  viewerClose.addEventListener('click', closeViewer);
+  nextBtn.addEventListener('click', goNext);
+  prevBtn.addEventListener('click', goPrev);
+
+  document.addEventListener('keydown', (e)=>{
+    if(!viewer.classList.contains('show')) return;
+    if(e.key === 'Escape') closeViewer();
+    if(e.key === 'ArrowRight') goNext();
+    if(e.key === 'ArrowLeft') goPrev();
+  });
+
+  /* swipe support */
+  let touchStartX = 0;
+  viewer.addEventListener('touchstart', (e)=>{ touchStartX = e.touches[0].clientX; });
+  viewer.addEventListener('touchend', (e)=>{
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 40){ dx < 0 ? goNext() : goPrev(); }
+  });
+</script>
+
+</body>
+</html>
